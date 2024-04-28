@@ -2,6 +2,7 @@ package com.example.dbbackend.Controller;
 
 import com.example.dbbackend.Model.CourseObjective;
 import com.example.dbbackend.Model.CourseObjectiveId;
+import com.example.dbbackend.Repository.CourseObjectiveRepository;
 import com.example.dbbackend.Service.CourseObjectiveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,8 @@ public class CourseObjectiveController {
     @Autowired
     private CourseObjectiveService courseObjectiveService;
 
+    @Autowired
+    CourseObjectiveRepository COR;
     @GetMapping("/")
     public ResponseEntity<List<CourseObjective>> getAllCourseObjectives() {
         List<CourseObjective> objectives = courseObjectiveService.getAllCourseObjectives();
@@ -41,5 +44,10 @@ public class CourseObjectiveController {
         CourseObjectiveId id = new CourseObjectiveId(courseNumber, objectiveCode);
         courseObjectiveService.deleteCourseObjective(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("get/{courseNumber}")
+    List<CourseObjective> getCourseObjectiveByCourse(@PathVariable String courseNumber) {
+       return courseObjectiveService.getCourseObjectiveByCourse(courseNumber);
     }
 }

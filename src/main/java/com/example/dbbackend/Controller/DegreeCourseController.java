@@ -22,12 +22,15 @@ public class DegreeCourseController {
         return ResponseEntity.ok(degreeCourses);
     }
 
-    @GetMapping("/{degreeId}/{courseNumber}")
-    public ResponseEntity<DegreeCourse> getDegreeCourse(@PathVariable int degreeId, @PathVariable String courseNumber) {
-        return degreeCourseService.getDegreeCourseById(degreeId, courseNumber)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    @GetMapping("/{degreeId}")
+    public ResponseEntity<List<DegreeCourse>> getDegreeCoursesByDegreeId(@PathVariable int degreeId) {
+        List<DegreeCourse> courses = degreeCourseService.getDegreeCoursesByDegreeId(degreeId);
+        if (courses.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(courses);
     }
+
 
     @PostMapping("/")
     public ResponseEntity<DegreeCourse> createOrUpdateDegreeCourse(@RequestBody DegreeCourse degreeCourse) {

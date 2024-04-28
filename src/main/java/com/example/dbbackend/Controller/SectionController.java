@@ -48,4 +48,10 @@ public class SectionController {
         sectionService.deleteSection(sectionId);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/range")
+    public ResponseEntity<List<Section>> getAllSectionsInRange(@RequestParam String courseNumber, @RequestParam String startSemester, @RequestParam int startYear, @RequestParam String endSemester, @RequestParam int endYear) {
+        List<Section> sections = sectionService.getRange(courseNumber,startSemester,startYear,endSemester,endYear);
+        return ResponseEntity.ok(sections);
+    }
 }

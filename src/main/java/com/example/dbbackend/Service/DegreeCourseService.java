@@ -20,10 +20,9 @@ public class DegreeCourseService {
         return degreeCourseRepository.findAll();
     }
 
-    public Optional<DegreeCourse> getDegreeCourseById(int degreeId, String courseNumber) {
-        return degreeCourseRepository.findById(new DegreeCourseId(degreeId, courseNumber));
+    public List<DegreeCourse> getDegreeCoursesByDegreeId(int degreeId) {
+        return degreeCourseRepository.findByDegreeId(degreeId);
     }
-
     public DegreeCourse saveOrUpdateDegreeCourse(DegreeCourse degreeCourse) {
         return degreeCourseRepository.save(degreeCourse);
     }

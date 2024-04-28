@@ -30,4 +30,7 @@ public class CourseObjectiveService {
     public void deleteCourseObjective(CourseObjectiveId courseObjectiveId) {
         courseObjectiveRepository.deleteById(courseObjectiveId);
     }
+    public List<CourseObjective> getCourseObjectiveByCourse(String course) {
+        return courseObjectiveRepository.findByCourseNumber(course);
+    }
 }
