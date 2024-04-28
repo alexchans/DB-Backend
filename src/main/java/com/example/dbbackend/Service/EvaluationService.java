@@ -34,6 +34,7 @@ public class EvaluationService {
         evaluationRepository.deleteById(evaluationId);
     }
 
+    @Autowired
     private SectionRepository sectionRepository;
 
     // Parameter instructor is of type int as it requests the ID of the instructor

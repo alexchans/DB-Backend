@@ -46,16 +46,14 @@ public class EvaluationController {
     }
     
     private static final Logger logger = LoggerFactory.getLogger(EvaluationController.class);
-    
+
     @PostMapping("/{DegreeId}/{Semester}/{Instructor}")
-    public ResponseEntity<List<Section>> getSectionsByInstructorAndSemester(
-            @RequestParam String DegreeId, 
-            @RequestParam String Semester, 
-            @RequestParam int Instructor) {
-        logger.info("I hate logger");
-        System.out.println(" DegreeId:" + DegreeId + " Semester:" + Semester + " Instructor:" + Instructor);
-        List<Section> sections = evaluationService.getSectionsByInstructorAndSemester(DegreeId, Semester, Instructor);
-        System.out.println("sections:" + sections);
+    public ResponseEntity<List <Section>> getSectionsByInstructorAndSemester(
+            @PathVariable String DegreeId,
+            @PathVariable String Semester,
+            @PathVariable int Instructor) {
+        logger.info("Received request for DegreeId: {}, Semester: {}, Instructor: {}", DegreeId, Semester, Instructor);
+        List <Section> sections = evaluationService.getSectionsByInstructorAndSemester(DegreeId, Semester, Instructor);
         return ResponseEntity.ok(sections);
     }
 }
