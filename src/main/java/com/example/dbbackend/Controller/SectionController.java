@@ -60,4 +60,28 @@ public class SectionController {
         List<Section> sections = sectionService.getSectionByInstructorAndSemester(instructorId,semester);
         return ResponseEntity.ok(sections);
     }
+
+//    @GetMapping("/instructorSectionsRange")
+//    public ResponseEntity<List<Section>> getSectionsByInstructorAndSemesterRange(@RequestParam Integer instructorId, @RequestParam String startSemester, @RequestParam String endSemester) {
+//        List<Section> sections = sectionService.getSectionsByInstructorAndSemesterRange(instructorId, startSemester, endSemester);
+//        if (sections.isEmpty()) {
+//            return ResponseEntity.notFound().build();
+//        }
+//        return ResponseEntity.ok(sections);
+//    }
+
+    @GetMapping("/instructorSectionsRange")
+    public ResponseEntity<List<Section>> getSectionsByInstructorAndSemesterRange(
+            @RequestParam Integer instructorId,
+            @RequestParam String startSemester,
+            @RequestParam int startYear,  // Added startYear
+            @RequestParam String endSemester,
+            @RequestParam int endYear) {  // Added endYear
+        List<Section> sections = sectionService.getSectionsByInstructorAndSemesterRange(instructorId, startSemester, startYear, endSemester, endYear);
+        if (sections.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(sections);
+    }
+
 }

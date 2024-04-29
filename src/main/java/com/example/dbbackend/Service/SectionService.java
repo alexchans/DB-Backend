@@ -63,4 +63,12 @@ public class SectionService {
     public List<Section> getSectionByInstructorAndSemester(int instructorId, String semester) {
         return sectionRepository.findByInstructorIdAndSemester(instructorId,semester);
     }
+
+//    public List<Section> getSectionsByInstructorAndSemesterRange(Integer instructorId, String startSemester, String endSemester) {
+//        return sectionRepository.findByInstructorIdAndSemesterBetween(instructorId, startSemester, endSemester);
+//    }
+
+    public List<Section> getSectionsByInstructorAndSemesterRange(Integer instructorId, String startSemester, int startYear, String endSemester, int endYear) {
+        return sectionRepository.findSectionsByInstructorAndSemesterRange(instructorId, startSemester, startYear, endSemester, endYear);
+    }
 }
