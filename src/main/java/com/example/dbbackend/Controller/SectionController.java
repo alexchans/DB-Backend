@@ -54,4 +54,10 @@ public class SectionController {
         List<Section> sections = sectionService.getRange(courseNumber,startSemester,startYear,endSemester,endYear);
         return ResponseEntity.ok(sections);
     }
+
+    @GetMapping("/instructorSections/{instructorId}/{semester}")
+    public ResponseEntity<List<Section>> getInstructorSections(@PathVariable int instructorId, @PathVariable String semester) {
+        List<Section> sections = sectionService.getSectionByInstructorAndSemester(instructorId,semester);
+        return ResponseEntity.ok(sections);
+    }
 }

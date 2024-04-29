@@ -29,4 +29,5 @@ public class EvaluationService {
     public void deleteEvaluation(int evaluationId) {
         evaluationRepository.deleteById(evaluationId);
     }
+    public List<Evaluation> findByInstructor(int degreeId, String courseNumber, String sectionNumber){return evaluationRepository.findByDegreeIdAndCourseNumberAndSectionNumber(degreeId,courseNumber,sectionNumber); }
 }

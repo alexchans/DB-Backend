@@ -39,4 +39,10 @@ public class EvaluationController {
         evaluationService.deleteEvaluation(evaluationId);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/findSpecifics/{degreeId}/{courseNumber}/{sectionNumber}")
+    public ResponseEntity<List<Evaluation>> getByInfo(@PathVariable int degreeId, @PathVariable String courseNumber, @PathVariable String sectionNumber) {
+        List<Evaluation> evaluations = evaluationService.findByInstructor(degreeId,courseNumber,sectionNumber);
+        return ResponseEntity.ok(evaluations);
+    }
 }
