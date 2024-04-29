@@ -1,8 +1,10 @@
 package com.example.dbbackend.Controller;
 
 import com.example.dbbackend.Model.Section;
+import com.example.dbbackend.Model.Evaluation;
 import com.example.dbbackend.Model.SectionId;
 import com.example.dbbackend.Service.SectionService;
+import com.example.dbbackend.dto.SectionWithEvaluationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -81,6 +83,18 @@ public class SectionController {
         if (sections.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
+        return ResponseEntity.ok(sections);
+    }
+
+    @GetMapping("/evaluate")
+    public ResponseEntity<List<Evaluation>> evaluateSections(@RequestParam String semester) {
+        List<Evaluation> results = sectionService.evaluateSections(semester);
+        return ResponseEntity.ok(results);
+    }
+
+    @GetMapping("/passRate")
+    public ResponseEntity<List<SectionWithEvaluationDTO>> findSectionsByPassRate(@RequestParam String semester, @RequestParam double passRatePercentage) {
+        List<SectionWithEvaluationDTO> sections = sectionService.findSectionsByPassRate(semester, passRatePercentage);
         return ResponseEntity.ok(sections);
     }
 
