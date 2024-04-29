@@ -29,12 +29,34 @@ public interface SectionRepository extends JpaRepository<Section, SectionId> {
 //    @Query("SELECT new com.example.dbbackend.dto.SectionWithEvaluationDTO(s, e.levelACount, e.levelBCount, e.levelCCount, e.levelFCount, e.improvementSuggestion) FROM Section s LEFT JOIN Evaluation e ON s.sectionNumber = e.sectionNumber AND s.semester = e.semester WHERE s.semester = :semester")
 //    List<SectionWithEvaluationDTO> findAllSectionsWithOptionalEvaluations(@Param("semester") String semester);
 
-    @Query("SELECT new com.example.dbbackend.dto.SectionWithEvaluationDTO(s, e.levelACount, e.levelBCount, e.levelCCount, e.levelFCount, e.improvementSuggestion) " +
-            "FROM Section s " +
-            "LEFT JOIN Evaluation e ON s.sectionNumber = e.sectionNumber " +
-            "WHERE s.semester = :semester " +
-            "AND (e.levelACount + e.levelBCount + e.levelCCount) / " +
-            "(e.levelACount + e.levelBCount + e.levelCCount + e.levelFCount) * 100 > :passRatePercentage")
+//    @Query("SELECT new com.example.dbbackend.dto.SectionWithEvaluationDTO(s, e.levelACount, e.levelBCount, e.levelCCount, e.levelFCount, e.improvementSuggestion) " +
+//            "FROM Section s " +
+//            "LEFT JOIN Evaluation e ON s.sectionNumber = e.sectionNumber " +
+//            "WHERE s.semester = :semester " +
+//            "AND (e.levelACount + e.levelBCount + e.levelCCount) / " +
+//            "(e.levelACount + e.levelBCount + e.levelCCount + e.levelFCount) * 100 >= :passRatePercentage")
+     @Query("SELECT new com.example.dbbackend.dto.SectionWithEvaluationDTO(" +
+             "s, " +
+             "COALESCE(e.levelACount, 0) AS levelACount, " +
+             "COALESCE(e.levelBCount, 0) AS levelBCount, " +
+             "COALESCE(e.levelCCount, 0) AS levelCCount, " +
+             "COALESCE(e.levelFCount, 0) AS levelFCount, " +
+             "COALESCE(e.improvementSuggestion, '')" +
+             ") " +
+             "FROM Section s " +
+             "LEFT JOIN Evaluation e ON s.sectionNumber = e.sectionNumber " +
+             "WHERE s.semester = :semester " +
+             "AND (" +
+             "COALESCE(e.levelACount, 0) + " +
+             "COALESCE(e.levelBCount, 0) + " +
+             "COALESCE(e.levelCCount, 0) " +
+             ") / (" +
+             "COALESCE(e.levelACount, 0) + " +
+             "COALESCE(e.levelBCount, 0) + " +
+             "COALESCE(e.levelCCount, 0) + " +
+             "COALESCE(e.levelFCount, 0) + 1" +
+             ") * 100 > :passRatePercentage"
+     )
     List<SectionWithEvaluationDTO> findSectionsByPassRate(@Param("semester") String semester, @Param("passRatePercentage") double passRatePercentage);
 
 
