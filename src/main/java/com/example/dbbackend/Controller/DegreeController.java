@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/degrees")
 public class DegreeController {
@@ -24,5 +26,20 @@ public class DegreeController {
         return degreeService.getDegreeById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+    @GetMapping("/all")
+    public ResponseEntity<List<Degree>> getAllDegrees() {
+        List<Degree> degrees = degreeService.getAllDegrees();
+        return ResponseEntity.ok(degrees);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteDegree(@PathVariable int id) {
+        boolean isDeleted = degreeService.deleteDegree(id);
+        if (isDeleted) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
